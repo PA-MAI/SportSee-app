@@ -1,0 +1,41 @@
+.page__profil{
+    display: flex;
+    flex-direction: row;
+    margin-right: 40px;
+}
+.profil{
+    display:flex;
+    flex-direction: column;
+    align-content: flex-start;
+    margin: 50px;
+    width: 65%;
+}
+h1 {
+    font-size: 3.2em;
+    line-height: 1.1;
+
+}
+.title{
+    margin-bottom: 40px;
+}
+.chart__activity{
+  width:90%;
+  height:320px;
+}
+.result{
+  margin-top: 214px;
+  display: flex;
+  flex-direction: column;
+  gap: 10%;
+
+  &__article{
+    background-color:#FBFBFB ;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    & img{
+      margin-right: 20px;
+    }
+  }
+}
