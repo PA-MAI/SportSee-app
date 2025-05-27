@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import '../../styles/css/profils.css';
+import { fetchUserMainData } from '../../utils/api';
+
 
 import Calories from '../../assets/svg/calories-icon.svg';
 import Proteines from '../../assets/svg/protein-icon.svg';
@@ -8,7 +10,12 @@ import Glucides from '../../assets/svg/carbs-icon.svg';
 import Lipides from '../../assets/svg/fat-icon.svg';
 
 import VertivalNav from '../../components/VerticalNav';
-import Activity from '../../components/charts/Activity';
+import Activity from '../../components/charts/ActivityChart';
+import AverageSessionsChart from '../../components/charts/LineChart';
+import Radar from '../../components/charts/RadarChart';
+import Kpi from '../../components/charts/KpiChart';
+
+import KeyDataCard from '../../components/KeyDataCard';
 
 function App() {
   const { userId } = useParams(); 
@@ -18,22 +25,20 @@ function App() {
 
 
   useEffect(() => {
-    fetch(`http://localhost:3000/user/${userId}`)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Erreur de chargement des données');
-        }
-        return response.json();
-      })
-      .then(response => {
-        console.log("Données utilisateur récupérées:", response.data);  
-        setUser(response.data);  
+    const loadData = async () => {
+      try {
+        const data = await fetchUserMainData(userId);
+        console.log("Données utilisateur récupérées:", data);
+        setUser(data);
+      } catch (err) {
+        setError('Impossible de charger les données utilisateur.');
+        console.error(err);
+      } finally {
         setLoading(false);
-      })
-      .catch(error => {
-        setError(error.message);
-        setLoading(false);
-      });
+      }
+    };
+  
+    loadData();
   }, [userId]);
 
   // Gestion du chargement et des erreurs
@@ -52,7 +57,7 @@ function App() {
       <div className="profil">
         <div className="title">
           {console.log('user:', user)}  {/* Log de l'objet user */}
-          <h1>Bonjour {user && user.userInfos ? user.userInfos.firstName : 'Chargement...'}</h1>
+          <h1>Bonjour <span className= "title__red">{user && user.userInfos ? user.userInfos.firstName : 'Chargement...'}</span></h1>
           <p>Félicitations ! Vous avez explosé vos objectifs hier.</p>
         </div>
         <div className='charts'>
@@ -61,30 +66,46 @@ function App() {
             {/* api1 */}
           </div>
           <div className="charts__other">
-            <span className="charts__other--objectifs"></span>{/* api2 */}
-            <span className="charts__other--radar"></span>{/* api3 */}
-            <span className="charts__other--kpi"></span>{/* api4 */}
+            <span className="charts__other--objectifs"><AverageSessionsChart /></span>{/* api2 */}
+            <span className="charts__other--radar"><Radar /></span>{/* api3 */}
+            <span className="charts__other--kpi"><Kpi /></span>{/* api4 */}
           </div>
         </div>
       </div>
       <div className="result">
-        <div className="result__article">
-          <img src={Calories} className="calories-icon" alt="icone calories" />
-          <span>Calories</span>
-        </div>
-        <div className="result__article">
-          <img src={Proteines} className="protein-icon" alt="icone proteines" />
-          <span>Proteines</span>
-        </div>
-        <div className="result__article">
-          <img src={Glucides} className="glucines-icon" alt="icone glucines" />
-          <span>Glucides</span>
-        </div>
-        <div className="result__article">
-          <img src={Lipides} className="lipides-icon" alt="icone lipides" />
-          <span>Lipides</span>
-        </div>
-      </div>
+  <KeyDataCard
+    icon={Calories}
+    alt="icone calories"
+    value={user.keyData.calorieCount}
+    unit="kCal"
+    label="Calories"
+    className="calories-icon"
+  />
+  <KeyDataCard
+    icon={Proteines}
+    alt="icone protéines"
+    value={user.keyData.proteinCount}
+    unit="g"
+    label="Protéines"
+    className="protein-icon"
+  />
+  <KeyDataCard
+    icon={Glucides}
+    alt="icone glucides"
+    value={user.keyData.carbohydrateCount}
+    unit="g"
+    label="Glucides"
+    className="glucines-icon"
+  />
+  <KeyDataCard
+    icon={Lipides}
+    alt="icone lipides"
+    value={user.keyData.lipidCount}
+    unit="g"
+    label="Lipides"
+    className="lipides-icon"
+  />
+</div>
     </div>
   );
 }
