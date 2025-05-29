@@ -3,8 +3,6 @@
   width: 117px;
   height: auto;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
 }
 .vertical__icons {
   display: flex;

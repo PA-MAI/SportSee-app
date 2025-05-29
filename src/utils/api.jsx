@@ -1,9 +1,5 @@
 import axios from "axios";
-import {
-  //transformActivityData,
-  //transformAverageSessions,
-  transformPerformanceData
-} from "../utils/transformers";
+import { transformPerformanceData } from "../utils/transformers";
 /**
  * Helper to safely fetch data with a fallback to mock data
  * @param {Function} apiCall - async function performing the API call
@@ -68,15 +64,18 @@ export const fetchUserAverageSessions = async (userId) => {
   return data.data ? data.data : data;
 };
 
+
 //fetch des données pour Recharts RadarChart
 export const fetchUserPerformance = async (userId) => {
   const raw = await fetchWithFallback(
-    () => axios.get(`http://localhost:3000/userPerformance?userId=${userId}`),
+    () => axios.get(`http://localhost:3000/user/${userId}/performance`),
     async () => {
       const { USER_PERFORMANCE } = await loadMockData();
       return USER_PERFORMANCE.find((p) => p.userId === parseInt(userId));
     }
   );
-  return transformPerformanceData(raw[0] || raw);
-};
 
+  // si c’est un appel à l’API directe, il faut lire .data
+  const performanceData = raw.data ? raw.data : raw;
+  return transformPerformanceData(performanceData);
+};

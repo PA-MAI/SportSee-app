@@ -14,7 +14,6 @@ const CustomTooltip = ({ active, payload }) => {
         color: "#000",
         padding: "5px 10px",
         fontSize: "12px",
-        borderRadius: "5px"
       }}>
         {`${payload[0].value} min`}
       </div>
@@ -36,7 +35,7 @@ const CustomTooltip = ({ active, payload }) => {
 //   );
 // };
 
-const SessionChartRecharts = () => {
+function SessionLineChart()  {
   const { userId } = useParams();
   const [sessions, setSessions] = useState([]);
   const [hoverIndex, setHoverIndex] = useState(null);
@@ -63,7 +62,7 @@ const SessionChartRecharts = () => {
   return (
     <div style={{
       backgroundColor: "#FF0000",
-      borderRadius: "10px",
+      borderRadius: "5px",
       padding: "0px",
       width: "100%",
       height: "100%",
@@ -82,10 +81,24 @@ const SessionChartRecharts = () => {
           zIndex: 2
         }} />
       )}
+    <div className='chart__title2' style={{
+        position: 'absolute',
+      width: "70%",
+      height: "50px",
+      top: 20,
+      left: 40,
+      zIndex: 10,
+      color: 'white',
+      fontSize: 15,
+      fontWeight: 600,
+      opacity: 0.8
+    }}>
+    Durée moyenne des sessions
+    </div>
       <ResponsiveContainer width="100%" height="100%">
         <LineChart
           data={sessions}
-          margin={{ top: 0, right: 20, bottom: 20, left: 20 }}
+          margin={{ top: 80, right: 20, bottom: 20, left: 20 }}
           onMouseMove={(e) => {
             if (e && e.activeTooltipIndex !== undefined) {
               setHoverIndex(e.activeTooltipIndex);
@@ -109,6 +122,7 @@ const SessionChartRecharts = () => {
 
           {/* Ligne grise complète */}
           <Line
+            
             type="monotone"
             dataKey="sessionLength"
             stroke="#B0B0B0"
@@ -142,12 +156,11 @@ const SessionChartRecharts = () => {
               fill: "#FFF"
             }}
           />
-          
-      
+
         </LineChart>
       </ResponsiveContainer>
     </div>
   );
 };
 
-export default SessionChartRecharts;
+export default SessionLineChart;

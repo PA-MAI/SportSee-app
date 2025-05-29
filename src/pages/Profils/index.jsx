@@ -11,7 +11,7 @@ import Lipides from '../../assets/svg/fat-icon.svg';
 
 import VertivalNav from '../../components/VerticalNav';
 import Activity from '../../components/charts/ActivityChart';
-import AverageSessionsChart from '../../components/charts/LineChart';
+import SessionLineChart from '../../components/charts/LineChart';
 import Radar from '../../components/charts/RadarChart';
 import Kpi from '../../components/charts/KpiChart';
 
@@ -54,58 +54,61 @@ function App() {
   return (
     <div className='page__profil'>
       <VertivalNav />
-      <div className="profil">
-        <div className="title">
-          {console.log('user:', user)}  {/* Log de l'objet user */}
-          <h1>Bonjour <span className= "title__red">{user && user.userInfos ? user.userInfos.firstName : 'Chargement...'}</span></h1>
-          <p>Félicitations ! Vous avez explosé vos objectifs hier.</p>
+      <div className='page__accueil'>
+        <div className="profil">
+          <div className="title">
+            {console.log('user:', user)}  {/* Log de l'objet user */}
+            <h1>Bonjour <span className= "title__red">{user && user.userInfos ? user.userInfos.firstName : 'Chargement...'}</span></h1>
+            <p>Félicitations ! Vous avez explosé vos objectifs hier.</p>
+          </div>
+          <div className='charts'>
+            <div className="chart__activity">
+              <Activity />
+              {/* api1 */}
+            </div>
+            <div className="charts__other">
+              <span className="charts__other--objectifs"><SessionLineChart /></span>{/* api2 */}
+              <span className="charts__other--radar"><Radar /></span>{/* api3 */}
+              <span className="charts__other--kpi"><Kpi /></span>{/* api4 */}
+            </div>
+          </div>
         </div>
-        <div className='charts'>
-          <div className="chart__activity">
-            <Activity />
-            {/* api1 */}
-          </div>
-          <div className="charts__other">
-            <span className="charts__other--objectifs"><AverageSessionsChart /></span>{/* api2 */}
-            <span className="charts__other--radar"><Radar /></span>{/* api3 */}
-            <span className="charts__other--kpi"><Kpi /></span>{/* api4 */}
-          </div>
+        <div className="result">
+          <KeyDataCard
+            icon={Calories}
+            alt="icone calories"
+            value={user.keyData.calorieCount}
+            unit="kCal"
+            label="Calories"
+            className="calories-icon"
+          />
+          <KeyDataCard
+            icon={Proteines}
+            alt="icone protéines"
+            value={user.keyData.proteinCount}
+            unit="g"
+            label="Protéines"
+            className="protein-icon"
+          />
+          <KeyDataCard
+            icon={Glucides}
+            alt="icone glucides"
+            value={user.keyData.carbohydrateCount}
+            unit="g"
+            label="Glucides"
+            className="glucines-icon"
+          />
+          <KeyDataCard
+            icon={Lipides}
+            alt="icone lipides"
+            value={user.keyData.lipidCount}
+            unit="g"
+            label="Lipides"
+            className="lipides-icon"
+          />
         </div>
       </div>
-      <div className="result">
-  <KeyDataCard
-    icon={Calories}
-    alt="icone calories"
-    value={user.keyData.calorieCount}
-    unit="kCal"
-    label="Calories"
-    className="calories-icon"
-  />
-  <KeyDataCard
-    icon={Proteines}
-    alt="icone protéines"
-    value={user.keyData.proteinCount}
-    unit="g"
-    label="Protéines"
-    className="protein-icon"
-  />
-  <KeyDataCard
-    icon={Glucides}
-    alt="icone glucides"
-    value={user.keyData.carbohydrateCount}
-    unit="g"
-    label="Glucides"
-    className="glucines-icon"
-  />
-  <KeyDataCard
-    icon={Lipides}
-    alt="icone lipides"
-    value={user.keyData.lipidCount}
-    unit="g"
-    label="Lipides"
-    className="lipides-icon"
-  />
-</div>
+ 
     </div>
   );
 }

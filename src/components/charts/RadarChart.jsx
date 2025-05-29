@@ -1,58 +1,43 @@
-import React, { PureComponent } from 'react';
-import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
+import React, { useEffect, useState } from 'react';
+import {
+  Radar, RadarChart, PolarGrid, PolarAngleAxis,
+  PolarRadiusAxis, ResponsiveContainer
+} from 'recharts';
+import { useParams } from 'react-router-dom';
+import { fetchUserPerformance } from '../../utils/api';
 
-const data = [
-  {
-    subject: 'Math',
-    A: 120,
-    B: 110,
-    fullMark: 150,
-  },
-  {
-    subject: 'Chinese',
-    A: 98,
-    B: 130,
-    fullMark: 150,
-  },
-  {
-    subject: 'English',
-    A: 86,
-    B: 130,
-    fullMark: 150,
-  },
-  {
-    subject: 'Geography',
-    A: 99,
-    B: 100,
-    fullMark: 150,
-  },
-  {
-    subject: 'Physics',
-    A: 85,
-    B: 90,
-    fullMark: 150,
-  },
-  {
-    subject: 'History',
-    A: 65,
-    B: 85,
-    fullMark: 150,
-  },
-];
+function SessionRadarChart() {
+  const { userId } = useParams();
+  const [performanceData, setPerformanceData] = useState([]);
 
-export default class Example extends PureComponent {
-  static demoUrl = 'https://codesandbox.io/p/sandbox/simple-radar-chart-2p5sxm';
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const data = await fetchUserPerformance(userId);
+        setPerformanceData(data);
+      } catch (error) {
+        console.error("Erreur lors du chargement des performances :", error);
+      }
+    };
+    loadData();
+  }, [userId]);
 
-  render() {
-    return (
-      <ResponsiveContainer width="100%" height="100%">
-        <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
-                <PolarGrid />
-                <PolarAngleAxis dataKey="subject" />
-          <PolarRadiusAxis  />
-          <Radar name="lol" dataKey="A" stroke="white" fill="red" fillOpacity={0.6} />
-        </RadarChart>
-      </ResponsiveContainer>
-    );
-  }
+  return (
+    <ResponsiveContainer width="100%" height="100%">
+      <RadarChart cx="50%" cy="50%" outerRadius="70%" data={performanceData}>
+        <PolarGrid />
+        <PolarAngleAxis dataKey="subject" tick={{ fill: "#FFF", fontSize: 12 }} />
+        <PolarRadiusAxis tick={false} axisLine={false} />
+        <Radar
+          name="Performance"
+          dataKey="A"
+          stroke="#FFF"
+          fill="#FF0101"
+          fillOpacity={0.7}
+        />
+      </RadarChart>
+    </ResponsiveContainer>
+  );
 }
+
+export default React.memo(SessionRadarChart);

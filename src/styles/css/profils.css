@@ -2,6 +2,14 @@
   display: flex;
   flex-direction: row;
   margin-right: 40px;
+  width: 100%;
+}
+.page__accueil {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  margin-right: 5%;
 }
 
 .profil {
@@ -13,6 +21,7 @@
 }
 
 h1 {
+  margin-top: 0;
   font-size: 3.2em;
   line-height: 1.1;
 }
@@ -36,38 +45,40 @@ h1 {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  flex-wrap: wrap;
   width: 100%;
   height: 320px;
   margin-top: 40px;
   gap: 1%;
 }
 .charts__other--objectifs {
-  width: 28%;
+  width: 254px;
   height: 263px;
   background-color: #FF0000;
-  padding: 20px;
+  padding: 0px;
   border-radius: 5px;
 }
 .charts__other--radar {
-  width: 28%;
+  width: 254px;
   height: 263px;
-  background-color: black;
-  padding: 20px;
+  background-color: #282D30;
+  padding: 0px;
   border-radius: 5px;
 }
 .charts__other--kpi {
-  width: 28%;
+  width: 254px;
   height: 263px;
   background-color: #FBFBFB;
-  padding: -10px;
+  padding: 0px;
   border-radius: 5px;
 }
 
 .result {
-  margin-top: 214px;
+  margin-top: 220px;
   display: flex;
   flex-direction: column;
   gap: 10%;
+  width: 18%;
 }
 .result__article {
   background-color: #FBFBFB;
@@ -75,7 +86,60 @@ h1 {
   display: flex;
   flex-direction: row;
   align-items: center;
+  padding: 20px;
 }
-.result__article img {
+hith .result__article img {
   margin-right: 20px;
+}
+.result__keydata {
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+}
+.result__keydata--data {
+  color: #282d30;
+  font-size: 20px;
+  font-weight: 700;
+}
+.result__keydata--name {
+  font-size: 18px;
+  color: #74798C;
+  font-weight: 500;
+}
+
+@media screen and (max-width: 1400px) {
+  .charts__other {
+    justify-content: center;
+    margin-bottom: 40px;
+    height: 520px;
+    gap: 20px;
+  }
+}
+@media screen and (max-width: 1064px) {
+  .profil {
+    margin: 30px;
+    padding: 20px;
+    width: 100%;
+  }
+  .title {
+    margin-left: 50px;
+  }
+  .charts__other {
+    height: 280px;
+  }
+  .page__accueil {
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    margin-right: 0;
+    flex-wrap: wrap;
+  }
+  .result {
+    margin: 20px 50px 20px 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 90%;
+    gap: 2%;
+  }
 }

@@ -264,10 +264,6 @@ const DATA = {
         }
     ],
 }
-//   const mockStore = {
-//     bills: jest.fn(() => ({
-//       list: jest.fn(() => Promise.resolve([])) // Simule un retour vide pour éviter les erreurs
-//     }))
-//   };
+
 
 export default DATA;

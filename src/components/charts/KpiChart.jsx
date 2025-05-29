@@ -1,38 +1,89 @@
-import React, { PureComponent } from 'react';
-import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from 'recharts';
+import React, { useEffect, useState } from 'react';
+import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
+import { useParams } from 'react-router-dom';
+import { fetchUserMainData } from '../../utils/api';
 
-const data = [
-  { name: 'Group A', value: 400 },
-  { name: 'Group B', value: 300 },
-  { name: 'Group C', value: 300 },
-  { name: 'Group D', value: 200 },
-];
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+const KpiChart = () => {
+  const { userId } = useParams();
+  const [score, setScore] = useState(0);
 
-export default class Example extends PureComponent {
-  static demoUrl = 'https://codesandbox.io/s/pie-chart-with-padding-angle-7ux0o';
+  useEffect(() => {
+    const load = async () => {
+      const data = await fetchUserMainData(userId);
+      const rawScore = data.todayScore ?? data.score; // pour gérer les 2 cas
+      setScore(rawScore || 0);
+    };
+    load();
+  }, [userId]);
 
-  render() {
-    return (
+  const percentage = score * 100;
+
+  const data = [
+    { name: 'Score', value: percentage },
+    { name: 'Reste', value: 100 - percentage },
+  ];
+
+  const COLORS = ['#FF0000', 'transparent'];
+
+  return (
+    <div style={{
+      position: 'relative',
+      background: '#FBFBFB',
+      borderRadius: '10px',
+      width: '100%',
+      height: '100%',
+    }}>
+      {/* ✅ Contenu central */}
+      <div style={{
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        width: '65%',
+        height: '65%',
+        backgroundColor: '#FFF',
+        borderRadius: '50%',
+        transform: 'translate(-50%, -50%)',
+        textAlign: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: 2
+      }}>
+        <p style={{
+          fontSize: 24,
+          fontWeight: 'bold',
+          marginBottom:0,
+        }}>{percentage}%</p>
+        <p style={{
+          fontSize: 16,
+          color: '#74798C',
+          fontWeight: 'bold',
+          maxWidth: 80
+        }}>de votre objectif</p>
+      </div>
+
       <ResponsiveContainer width="100%" height="100%">
-      <PieChart width={250} height={265} onMouseEnter={this.onPieEnter}>
-        <Pie
-          data={data}
-          cx={120}
-          cy={200}
-          innerRadius={60}
-          outerRadius={80}
-          fill="#8884d8"
-          paddingAngle={5}
-          dataKey="value"
-        >
-          {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-          ))}
-        </Pie>
-       
-      </PieChart>
+        <PieChart>
+          <Pie
+            data={data}
+            startAngle={200}  // ➡️ départ à midi - le quart
+            endAngle={-135}   // ➡️ sens horaire
+            cx="50%"
+            cy="50%"
+            innerRadius="70%"
+            outerRadius="80%"
+            dataKey="value"
+            cornerRadius={10}
+          >
+            {data.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS[index]} />
+            ))}
+          </Pie>
+        </PieChart>
       </ResponsiveContainer>
-    );
-  }
-}
+    </div>
+  );
+};
+
+export default KpiChart;

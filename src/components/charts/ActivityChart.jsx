@@ -25,7 +25,19 @@ function Activity() {
   }, [userId]);
 
   return (
-    
+    <>
+    <div className='chart__title1' style={{
+      position: 'relative',
+      top: 40,
+      left: 50,
+      zIndex: 10,
+      color: 'Black',
+      fontSize: 16,
+      fontWeight: 600,
+      opacity: 0.8
+    }}>
+    Activité quotidienne
+    </div>
     <ResponsiveContainer width="100%" height="100%">
       <BarChart
         data={activityData}
@@ -34,15 +46,15 @@ function Activity() {
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="day" />
         <YAxis yAxisId="left" orientation="left" hide={true}/>
-        <YAxis yAxisId="right" orientation="right" domain={['dataMin - 5', 'dataMax + 2']}/>
+        <YAxis yAxisId="right" orientation="right" domain={['dataMin - 1', 'dataMax + 1']}/>
         <Tooltip />
-        <Legend width={360} wrapperStyle={{ top: 5, right: 20, backgroundColor: '#FBFBFB', borderRadius: 3, lineHeight: '40px' }}/>
+        <Legend width={360} hide={true} wrapperStyle={{ top: 5, right: 20, backgroundColor: '#FBFBFB', borderRadius: 3, lineHeight: '40px' } }/>
         <Bar
           yAxisId="right"
           dataKey="kilogram"
           fill="#282D30"
-          name="Poids (kg)"
-          barSize={10}
+          name="kg"
+          barSize={8}
           radius={[3, 3, 0, 0]}
           activeBar={<Rectangle fill="#282D30" stroke="#282D30" />}
         />
@@ -50,14 +62,14 @@ function Activity() {
           yAxisId="left"
           dataKey="calories"
           fill="#E60000"
-          name="Calories brûlées (kCal)"
-          barSize={10}
+          name="kCal"
+          barSize={8}
           radius={[3, 3, 0, 0]}
           activeBar={<Rectangle fill="#E60000" stroke="#E60000" />}
         />
       </BarChart>
     </ResponsiveContainer>
-
+</>
   );
 }
 
