@@ -1,30 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   Radar, RadarChart, PolarGrid, PolarAngleAxis,
   PolarRadiusAxis, ResponsiveContainer
 } from 'recharts';
-import { useParams } from 'react-router-dom';
-import { fetchUserPerformance } from '../../utils/api';
 
-function SessionRadarChart() {
-  const { userId } = useParams();
-  const [performanceData, setPerformanceData] = useState([]);
-
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        const data = await fetchUserPerformance(userId);
-        setPerformanceData(data);
-      } catch (error) {
-        console.error("Erreur lors du chargement des performances :", error);
-      }
-    };
-    loadData();
-  }, [userId]);
-
+function RadarChartComponent({ data }) {
   return (
     <ResponsiveContainer width="100%" height="100%">
-      <RadarChart cx="50%" cy="50%" outerRadius="70%" data={performanceData}>
+      <RadarChart cx="50%" cy="50%" outerRadius="70%" data={data}>
         <PolarGrid />
         <PolarAngleAxis dataKey="subject" tick={{ fill: "#FFF", fontSize: 12 }} />
         <PolarRadiusAxis tick={false} axisLine={false} />
@@ -40,4 +23,4 @@ function SessionRadarChart() {
   );
 }
 
-export default React.memo(SessionRadarChart);
+export default React.memo(RadarChartComponent);

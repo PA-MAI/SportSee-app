@@ -1,4 +1,5 @@
 //import { useState } from 'react'
+import { Link } from 'react-router-dom';
 import Logo from '../assets/svg/logo.svg'
 import LogoSportSee from '../assets/svg/logoSportSee.svg'
 import '../styles/css/header.css'
@@ -13,9 +14,11 @@ function Header() {
                 <img src={LogoSportSee} className="SportSee logo" alt="logo SportSee" />
             </a>
             <nav className="header__nav">
-                <p>
-                Accueil
-                </p>
+                <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+                  <p>
+                    Accueil
+                  </p>
+                </Link>
                 <p>
                 Profil
                 </p>

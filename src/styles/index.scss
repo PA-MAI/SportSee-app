@@ -1,41 +1,38 @@
 :root {
-    font-family: system-ui, "Roboto", sans-serif;
-    line-height: 1.5;
-    font-weight: 400;
-    margin:0;
-    font-synthesis: none;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    :visited {
-        color:inherit;
+      font-family: system-ui, 'Roboto', sans-serif;
+      line-height: 1.5;
+      font-weight: 400;
+      margin: 0;
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      :visited {
+            color: inherit;
       }
-  }
-  #root { margin: 0 auto;
-    /*text-align: center;*/
-    max-width: 1440px;
-    width: 100%;
-    height: auto;
-    background-color: white;
-  }
-  a {
-    font-weight: 500;
-    color: black;
-    text-decoration: inherit;
-  }
+}
+#root {
+      margin: 0 auto;
+      /*text-align: center;*/
+      max-width: 1440px;
+      width: 100%;
+      height: auto;
+      background-color: white;
+}
+a {
+      font-weight: 500;
+      color: black;
+      text-decoration: inherit;
+}
 
-  
-  body {
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    place-items: center;
-    align-content: center;
-    min-width: 1024px;
-    min-height: 720px;
-    width: 100%;
-    background-color: #ffffff;
-  }
-
-
-
+body {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      place-items: center;
+      align-content: center;
+      min-width: 1024px;
+      min-height: 720px;
+      width: 100%;
+      background-color: #ffffff;
+}

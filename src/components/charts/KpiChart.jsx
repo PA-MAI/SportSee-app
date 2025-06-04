@@ -1,28 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+//import React, { useEffect, useState } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
-import { useParams } from 'react-router-dom';
-import { fetchUserMainData } from '../../utils/api';
+//import { useParams } from 'react-router-dom';
 
-const KpiChart = () => {
-  const { userId } = useParams();
-  const [score, setScore] = useState(0);
 
-  useEffect(() => {
-    const load = async () => {
-      const data = await fetchUserMainData(userId);
-      const rawScore = data.todayScore ?? data.score; // pour gérer les 2 cas
-      setScore(rawScore || 0);
-    };
-    load();
-  }, [userId]);
-
-  const percentage = score * 100;
-
-  const data = [
-    { name: 'Score', value: percentage },
-    { name: 'Reste', value: 100 - percentage },
-  ];
-
+const KpiChart = ({ data }) => {
+  const percentage = data[0]?.value || 0;
   const COLORS = ['#FF0000', 'transparent'];
 
   return (
@@ -33,7 +16,6 @@ const KpiChart = () => {
       width: '100%',
       height: '100%',
     }}>
-      {/* ✅ Contenu central */}
       <div style={{
         position: 'absolute',
         top: '50%',
@@ -50,25 +32,20 @@ const KpiChart = () => {
         justifyContent: 'center',
         zIndex: 2
       }}>
-        <p style={{
-          fontSize: 24,
-          fontWeight: 'bold',
-          marginBottom:0,
-        }}>{percentage}%</p>
-        <p style={{
-          fontSize: 16,
-          color: '#74798C',
-          fontWeight: 'bold',
-          maxWidth: 80
-        }}>de votre objectif</p>
+        <p style={{ fontSize: 24, fontWeight: 'bold', marginBottom: 0 }}>
+          {percentage}%
+        </p>
+        <p style={{ fontSize: 16, color: '#74798C', fontWeight: 'bold', maxWidth: 80 }}>
+          de votre objectif
+        </p>
       </div>
 
       <ResponsiveContainer width="100%" height="100%">
         <PieChart>
           <Pie
             data={data}
-            startAngle={200}  // ➡️ départ à midi - le quart
-            endAngle={-135}   // ➡️ sens horaire
+            startAngle={200}
+            endAngle={-135}
             cx="50%"
             cy="50%"
             innerRadius="70%"
@@ -86,4 +63,4 @@ const KpiChart = () => {
   );
 };
 
-export default KpiChart;
+export default React.memo(KpiChart);
