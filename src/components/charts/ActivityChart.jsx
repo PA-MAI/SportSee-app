@@ -26,7 +26,7 @@ function ActivityChart({ data }) {
   };
   // Legend personnalisée 
   const CustomLegend = ({ payload }) => (
-    <ul style={{ display: 'flex', listStyle: 'none', paddingLeft: 20, marginTop: 10, marginLeft:20, marginRight:10 }}>
+    <ul style={{ display: 'flex', listStyle: 'none', paddingLeft: 20, marginTop: 10, marginLeft:50, marginRight:10 }}>
       {payload.map((entry, index) => {
         const label = entry.dataKey === 'kilogram' ? 'Poids (kg)' : 'Calories brûlées (kCal)';
         return (

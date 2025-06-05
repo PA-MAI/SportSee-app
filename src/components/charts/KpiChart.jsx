@@ -35,7 +35,7 @@ const KpiChart = ({ data }) => {
         <p style={{ fontSize: 24, fontWeight: 'bold', marginBottom: 0 }}>
           {percentage}%
         </p>
-        <p style={{ fontSize: 16, color: '#74798C', fontWeight: 'bold', maxWidth: 80 }}>
+        <p style={{ fontSize: 16, color: '#74798C', fontWeight: '600', marginTop: 0,  maxWidth: 80 }}>
           de votre objectif
         </p>
       </div>
