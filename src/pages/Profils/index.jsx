@@ -70,7 +70,7 @@ function App() {
                         setAverageSessions(
                               transformAverageSessions(rawAverageSessions)
                         )
-
+                        console.log("✅ Data finale pour RadarChart:", transformPerformanceData(rawPerformance));
                         // Transformation et stockage des données de performance pour le RadarChart
                         setPerformanceData(
                               transformPerformanceData(rawPerformance)

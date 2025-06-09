@@ -2,24 +2,34 @@
  * Transforme les données de performance pour Recharts RadarChart
  */
 export const transformPerformanceData = (data) => {
-      const translations = {
-            cardio: 'Cardio',
-            energy: 'Énergie',
-            endurance: 'Endurance',
-            strength: 'Force',
-            speed: 'Vitesse',
-            intensity: 'Intensité',
+      if (!data || !data.kind || !Array.isArray(data.data)) {
+        console.error('Performance data malformée :', data);
+        return [];
       }
-
-      const kindMap = data.kind
-
+    
+      const translations = {
+        cardio: 'Cardio',
+        energy: 'Énergie',
+        endurance: 'Endurance',
+        strength: 'Force',
+        speed: 'Vitesse',
+        intensity: 'Intensité',
+      };
+    
+      const kindMap = data.kind;
+    
       return data.data
-            .map((item) => ({
-                  subject: translations[kindMap[item.kind]], // traduit ici
-                  A: item.value,
-            }))
-            .reverse() // on inverse ici l’ordre d’affichage
-}
+        .map((item) => ({
+          subject: translations[kindMap[item.kind]],
+          A: item.value,
+        }))
+        .reverse();
+    };
+      
+
+
+
+
 /**
  * Transforme l'activité quotidienne pour BarChart
  */
