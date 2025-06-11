@@ -28,7 +28,6 @@
   rotate: z 180deg;
   writing-mode: vertical-rl;
   text-orientation: sideways-right;
-  /*text-align: center;*/
   padding: 30px;
-  margin-top: 60%;
+  margin-top: 30%;
 }

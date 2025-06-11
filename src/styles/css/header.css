@@ -13,6 +13,12 @@
   align-content: center;
   align-items: center;
   padding: 20px;
+  width: 178px;
+  height: 60px;
+}
+.header__logo img.logo {
+  margin-right: 10px;
+  margin-left: 10px;
 }
 .header__nav {
   display: flex;

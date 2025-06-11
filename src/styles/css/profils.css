@@ -30,14 +30,13 @@ h1 {
   margin-bottom: 40px;
 }
 .title__red {
-  color: #FF0000;
+  color: #ff0000;
 }
 
 .chart__activity {
-  padding: 20px;
   width: 100%;
   height: 320px;
-  background-color: #FBFBFB;
+  background-color: #fbfbfb;
   border-radius: 5px;
 }
 
@@ -54,21 +53,21 @@ h1 {
 .charts__other--objectifs {
   width: 254px;
   height: 263px;
-  background-color: #FF0000;
+  background-color: #ff0000;
   padding: 0px;
   border-radius: 5px;
 }
 .charts__other--radar {
   width: 254px;
   height: 263px;
-  background-color: #282D30;
+  background-color: #282d30;
   padding: 0px;
   border-radius: 5px;
 }
 .charts__other--kpi {
   width: 254px;
   height: 263px;
-  background-color: #FBFBFB;
+  background-color: #fbfbfb;
   padding: 0px;
   border-radius: 5px;
 }
@@ -83,7 +82,7 @@ h1 {
   height: 500px;
 }
 .result__article {
-  background-color: #FBFBFB;
+  background-color: #fbfbfb;
   border-radius: 5px;
   display: flex;
   flex-direction: row;
@@ -107,7 +106,7 @@ h1 {
 }
 .result__keydata--name {
   font-size: 14px;
-  color: #74798C;
+  color: #74798c;
   font-weight: 600;
 }
 
@@ -146,7 +145,7 @@ h1 {
 }
 @media screen and (max-width: 1064px) {
   .profil {
-    margin: 30px;
+    margin: 10px;
     padding: 20px;
     width: 90%;
     height: 1150px;

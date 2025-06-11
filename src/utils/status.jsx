@@ -2,8 +2,8 @@ import axios from 'axios';
 
 let isBackendAvailable = true;
 let monitorIntervalId = null;
-let isMonitoring = false; // verrou de sécurité pour éviter les doublons
-let hasReloaded = false;  // nouveau flag pour éviter plusieurs reloads
+let isMonitoring = false;  // Verrou pour éviter les tests simultanés
+let hasReloaded = false;   // Évite les rechargements multiples
 
 /**
  * Ping le backend pour vérifier sa disponibilité.
@@ -11,7 +11,7 @@ let hasReloaded = false;  // nouveau flag pour éviter plusieurs reloads
  */
 const pingBackend = async () => {
   try {
-    await axios.get('http://localhost:3000/user/12'); // ping backend
+    await axios.get('http://localhost:3000/user/12');
     return true;
   } catch {
     return false;
@@ -19,28 +19,41 @@ const pingBackend = async () => {
 };
 
 /**
- * Démarre une surveillance automatique du backend si offline
+ * Gère les changements de statut du backend.
+ * Met à jour les flags et déclenche un reload si nécessaire.
+ * @param {boolean} newStatus
+ */
+const handleBackendStatusChange = (newStatus) => {
+  if (isBackendAvailable !== newStatus) {
+    hasReloaded = false; // reset si changement de statut
+  }
+
+  // Si le backend redevient disponible après une coupure
+  if (!isBackendAvailable && newStatus && !hasReloaded) {
+    console.warn('Connexion au serveur à nouveau fonctionnelle, rechargement de la page !');
+    hasReloaded = true;
+    location.reload();
+  }
+
+  isBackendAvailable = newStatus;
+};
+
+/**
+ * Démarre une surveillance automatique toutes les 60s du backend si offline
  */
 const startBackendMonitor = () => {
-  if (isMonitoring) return; // ne pas relancer si déjà actif
+  if (isMonitoring) return; // Ne pas relancer si déjà actif
   isMonitoring = true;
 
   monitorIntervalId = setInterval(async () => {
     const status = await pingBackend();
+    handleBackendStatusChange(status);
+
     if (status) {
       console.log('✅ Backend à nouveau disponible.');
-
-      if (!isBackendAvailable && !hasReloaded) {
-        // Backend était indisponible, il revient, on reload une seule fois
-        hasReloaded = true;
-        console.warn('Connexion au serveur à nouveau fonctionnelle, rechargement de la page !');
-        location.reload();
-      }
-
-      isBackendAvailable = true;
       clearInterval(monitorIntervalId);
       monitorIntervalId = null;
-      isMonitoring = false; //débloque le verrou
+      isMonitoring = false;
     }
   }, 60000); // ping toutes les 60 secondes
 };
@@ -52,15 +65,11 @@ const startBackendMonitor = () => {
  */
 export const checkBackendStatus = async () => {
   const status = await pingBackend();
-  if (isBackendAvailable !== status) {
-    // Reset flag si on détecte un changement de statut
-    hasReloaded = false;
-  }
-  isBackendAvailable = status;
+  handleBackendStatusChange(status);
 
   if (!status) {
     console.warn('Backend indisponible. Démarrage de la surveillance...');
-    startBackendMonitor(); // commence à surveiller automatiquement si ce n'est pas déjà en cours
+    startBackendMonitor();
   }
 
   return status;
